@@ -1,12 +1,14 @@
 import './App.scss';
-import {AuthRouter } from './contexts/AuthContext.jsx';
+import {AuthRouter , useAuth } from './contexts/AuthContext.jsx';
+import Chat from './components/Chat/Chat.jsx' 
+import Login from './components/Login/Login.jsx' 
 
 function App() {
+  
+
   return (
     <AuthRouter>
-         {
-          token ? <Chat /> : <Login />
-         }
+           <Chat />
     </AuthRouter>
   );
 }

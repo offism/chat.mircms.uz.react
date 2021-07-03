@@ -1,14 +1,23 @@
-import React from 'react'
+import React , {useEffect} from 'react'
 const AuthContext = React.createContext()
 
 function AuthRouter ({children}){
 
   const [token , setToken] = React.useState(window.localStorage.getItem('token'))
 
+
+  useEffect(()=>{
+  	if(token) {
+  		window.localStorage.setItem('token' , token)
+  	} else {
+  		window.localStorage.removeItem('token')
+  	}
+  }, [token])
+
 	return (
       <AuthContext.Provider value={{token , setToken}}>
       	<AuthContext.Consumer>
-      		{()=>{ children }}
+      		{ () => children }
       	</AuthContext.Consumer>
       </AuthContext.Provider>
 		)
@@ -20,6 +29,6 @@ function useAuth(){
 	return [token , setToken]
 }
 
-export default = {
+export   {
 	AuthContext , AuthRouter , useAuth
 }
