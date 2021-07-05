@@ -2,6 +2,7 @@ import React , {useEffect} from 'react'
 import {useAuth} from '../../contexts/AuthContext.jsx'
 import Login from '../Login/Login.jsx'
 import {Container , ListGroup , ListGroupItem ,Row,Col , Card , CardText , CardTitle , CardBody , CardHeader , Form , Input , Button } from 'reactstrap'
+import { io } from "socket.io-client";
 
 export default function Chat(){
 
@@ -10,7 +11,9 @@ export default function Chat(){
 	if(!token){
 		return <Login />
 	}
-
+    
+    	let socket = io(`http://192.168.0.102:8080`)
+        console.log(socket)
 	return ( 
 		<Container className="text-center my-3">
 		   <h1 className="mx-auto">Welcome Our Chat</h1> 
