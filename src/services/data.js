@@ -12,4 +12,17 @@ export default class Data{
 		res = await res.json()
 		return res
 	}
+	static async LoginFetch(username , password){
+		let res = await fetch('http://192.168.0.102:8080/users/login', {
+			method: "POST",
+			headers:{
+				"Content-Type":"application/json",
+			},
+			body:JSON.stringify({
+				username , password
+			})
+		})
+		res = await res.json()
+		return res
+	}
 }
