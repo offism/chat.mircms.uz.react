@@ -1,11 +1,13 @@
 import React , {useEffect , useState} from 'react'
 import {useAuth} from '../../contexts/AuthContext.jsx'
 import Chat from '../Chat/Chat.jsx'
-import {Form , FormGroup , Label , Input , Button , FormText} from 'reactstrap'
+import {Form , FormGroup , Label, Alert , Input , Button , FormText} from 'reactstrap'
 import Data from '../../services/data.js'
+
 export default function Login(){
 
 	const [token , setToken] = useAuth()
+	const [alert , setAlert] = useAuth(false)
     const [validUsername , setValidUsername] = useState(true)
     const [validPassword , setValidPassword] = useState(true)
     const [username , setUsername] = useState("")
@@ -30,15 +32,21 @@ export default function Login(){
 
 	if(token){
 		return <Chat />
-	}
+	} 
 
     async function handleSubmit(e){
      e.preventDefault()
      if(page == "sign_up"){
      	let res = await Data.SignUpFetch(username , password)
-        console.log(res)
+     	console.log(res)
+        if(res.ok){
+        	setToken(res.token)
+        	setAlert(false)
+        } else{
+        	setAlert("Username Already Exists or Password is incorrect")
+        	}
+        }
      }
-    }
 
 	return(
 	    <section className="vh-100 d-flex align-items-center flex-column justify-content-center">
@@ -47,6 +55,7 @@ export default function Login(){
 		    { page == "login" ? "Login" : "Sign Up"}
 		 </h1>
 		 <Form onSubmit={ e=> handleSubmit(e)} className="mt-4 w-100">
+		   {alert && <Alert className="danger">{alert}</Alert>}
 		  <FormGroup>
 		    <Label for="username"></Label>
 		    <Input bsSize="lg" type="username" name="username" id="username" autoComplete="off" placeholder="Username" onChange={ e =>setUsername(e.target.value) } onKeyUp={ e =>setUsername(e.target.value) } invalid={!validUsername} />

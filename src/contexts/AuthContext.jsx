@@ -1,10 +1,10 @@
-import React , {useEffect} from 'react'
+import React , {useEffect , useState} from 'react'
+
 const AuthContext = React.createContext()
 
 function AuthRouter ({children}){
 
   const [token , setToken] = React.useState(window.localStorage.getItem('token'))
-
 
   useEffect(()=>{
   	if(token) {
