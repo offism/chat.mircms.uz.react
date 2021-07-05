@@ -29,7 +29,6 @@ export default function Login(){
 			setValidPassword(false) 
 		}
 	} , [password])
-console.log(token)
 	if(token){
 		return <Chat />
 	} 
